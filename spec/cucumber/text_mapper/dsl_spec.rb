@@ -19,9 +19,11 @@ module Cucumber
       end
 
       describe ".def_map" do
-        it "stores mappings in the namespace" do
+        it "creates a mapping in the namespace" do
           namespace.should_receive(:add_mapping).with(an_instance_of(Mapping))
-          within(namespace) { def_map :from => :to }
+          within(namespace) do
+            def_map :from => :to
+          end
         end
       end
     end
