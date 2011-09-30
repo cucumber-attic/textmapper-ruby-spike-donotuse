@@ -6,7 +6,7 @@ module Cucumber
       def self.from_fluent(dsl_args)
         from, to = dsl_args.shift
         meth_name, *types = to
-        pattern = [from].flatten
+        pattern = [:map, from].flatten
         new(pattern, meth_name, types)
       end
 
