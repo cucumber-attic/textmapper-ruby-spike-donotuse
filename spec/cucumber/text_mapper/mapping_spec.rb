@@ -36,6 +36,11 @@ module Cucumber
       end
 
       describe ".from_fluent" do
+        it "appends :map to the from pattern" do
+          mapping = Mapping.from_fluent([[:from], :to])
+          mapping.should match([:map, :from])
+        end
+
         it "can anchor all strings and regexen"
         it "can set debug level"
       end
