@@ -38,5 +38,7 @@ module TextMapper
       to = Target.new(:foo, [Integer])
       to.call(ctx, ["1"])
     end
+
+    it "rearranges argument order to match the target method signature"
   end
 end

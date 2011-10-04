@@ -45,8 +45,6 @@ module TextMapper
       end
 
       it "raises an error when the action does not contain enough information to satisfy the 'from'"
-      it "invokes a method on a different subject"
-      it "rearranges argument order"
     end
 
     describe "#source_location" do
