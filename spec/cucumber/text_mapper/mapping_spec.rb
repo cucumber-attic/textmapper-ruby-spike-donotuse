@@ -3,6 +3,15 @@ require 'spec_helper'
 module Cucumber
   module TextMapper
     describe Mapping do
+      describe ".from_fluent" do
+        it "appends :map to the from pattern" do
+          mapping = Mapping.from_fluent([[:from], :to])
+          mapping.should match([:map, :from])
+        end
+      end
+
+      describe "how it maps to a target"
+
       describe "#call" do
         let(:receiver) { double("dispatch receiver") }
 
@@ -33,16 +42,6 @@ module Cucumber
         it "raises an error when the action does not contain enough information to satisfy the 'from'"
         it "invokes a method on a different subject"
         it "rearranges argument order"
-      end
-
-      describe ".from_fluent" do
-        it "appends :map to the from pattern" do
-          mapping = Mapping.from_fluent([[:from], :to])
-          mapping.should match([:map, :from])
-        end
-
-        it "can anchor all strings and regexen"
-        it "can set debug level"
       end
 
       describe "#source_location" do

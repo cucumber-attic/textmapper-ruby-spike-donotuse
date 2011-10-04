@@ -110,7 +110,13 @@ module Cucumber
       end
 
       describe ".new" do
-        it "requires an array-ish argument" do
+        it "converts the argument to an array" do
+          expect {
+            Pattern.new({ :foo => :bar })
+          }.to_not raise_error(TypeError)
+        end
+
+        it "raises TypeError if the argument cannot be converted with #to_a" do
           expect {
             Pattern.new(:foo)
           }.to raise_error(TypeError)

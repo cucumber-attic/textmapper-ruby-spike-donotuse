@@ -19,12 +19,12 @@ module Cucumber
         @types = types
       end
 
-      def match(pattern)
-        from === pattern
+      def match(raw_pattern)
+        from === raw_pattern
       end
 
-      def captures_from(pattern)
-        if captures = from.match(pattern)
+      def captures_from(raw_pattern)
+        if captures = from.match(raw_pattern)
           if @types.empty?
             captures
           else
