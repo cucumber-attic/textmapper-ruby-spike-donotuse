@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cucumber-text_mapper (0.1.0)
+    textmapper (0.1.0)
 
 GEM
   remote: http://www.rubygems.org/
@@ -20,5 +20,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cucumber-text_mapper!
   rspec
+  textmapper!

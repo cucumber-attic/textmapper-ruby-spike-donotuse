@@ -1,6 +1,6 @@
-# Cucumber TextMapper
+# TextMapper
 
-Cucumber TextMapper drives dispatch of ruby code from patterns
+TextMapper drives dispatch of ruby code from patterns
 built out of plain text.
 
 ## Getting Started

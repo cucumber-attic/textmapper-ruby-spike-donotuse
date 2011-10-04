@@ -2,4 +2,4 @@ require 'bundler'
 Bundler.setup
 
 require 'rspec'
-require 'cucumber/text_mapper'
+require 'text_mapper'

@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
-  s.name        = 'cucumber-text_mapper'
+  s.name        = 'textmapper'
   s.version     = '0.1.0'
   s.authors     = ["Mike Sassak"]
-  s.description = "Cucumber TextMapper"
-  s.summary     = "cucumber-text_mapper #{s.version}"
+  s.description = "Dispatch Ruby with patterns built from plain text"
+  s.summary     = "textmapper #{s.version}"
   s.email       = "msassak@gmail.com"
-  s.homepage    = "https://github.com/cucumber/cucumber-text_mapper"
+  s.homepage    = "https://github.com/cucumber/textmapper-ruby"
 
   s.add_development_dependency 'rspec'
 
