@@ -20,23 +20,6 @@ module TextMapper
     describe "#build_context" do
       subject { Namespace.new }
 
-      class TestContext
-        attr_reader :mappings
-
-        def mappings=(mappings)
-          @mappings = mappings
-        end
-
-        def mappers=(mappers)
-          mappers.each { |mapper| extend(mapper) }
-        end
-
-        def dispatch(pattern)
-          mapping = mappings.find_mapping(pattern)
-          mapping.call(self, pattern)
-        end
-      end
-
       def build_mapper(name, namespace)
         from = :"from_#{name}"
         to   = :"to_#{name}"
@@ -52,7 +35,7 @@ module TextMapper
         # Move dispatch assertion to Context spec, use a mock to ensure the Context Factory's new method
         # is called with the correct arguments
         build_mapper(:mapper_a, subject.to_extension_module)
-        context = subject.build_context(TestContext.new)
+        context = subject.build_context(Context.new)
         context.dispatch([:map, :from_mapper_a]).should eq(:to_mapper_a)
       end
     end

@@ -1,3 +1,4 @@
+require 'text_mapper/context'
 require 'text_mapper/namespace'
 
 module TextMapper
