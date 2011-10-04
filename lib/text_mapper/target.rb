@@ -6,7 +6,7 @@ module TextMapper
       @name, @receiver = name, receiver
     end
 
-    # TODO: Retreiving the receiver with an explicit
+    # TODO: Retrieving the receiver with an explicit
     # protocol supported by the context is probably
     # more polite.
     def call(ctx, args=[])

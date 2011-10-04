@@ -7,16 +7,13 @@ module TextMapper
       from, to = dsl_args.shift
       meth_name, *types = to
       pattern = [:map, from].flatten
-      new(pattern, meth_name, types)
+      new(Pattern.new(pattern), Target.new(meth_name), types)
     end
 
-    attr_reader :from, :to, :name
+    attr_reader :from, :to
 
     def initialize(from, to, types=[])
-      @name = from
-      @from = Pattern.new(from)
-      @to = to # MethodSignature.new(to) ???
-      @types = types
+      @from, @to, @types = from, to, types
     end
 
     def match(raw_pattern)
@@ -46,7 +43,7 @@ module TextMapper
 
     def call(receiver, action=[])
       args = captures_from(action)
-      receiver.send(to, *args)
+      to.call(receiver, args)
     end
   end
 end
