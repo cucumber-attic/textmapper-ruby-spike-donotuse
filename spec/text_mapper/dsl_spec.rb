@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module TextMapper
   describe Dsl do
-    let(:namespace) { double("namespace").as_null_object }
+    let(:namespace) { Namespace.new }
 
     def within(namespace, &script)
       Module.new do
