@@ -39,6 +39,6 @@ module TextMapper
       to.call(ctx, ["1"])
     end
 
-    it "rearranges argument order to match the target method signature"
+    it "rearranges argument order to match the targeted methods's signature"
   end
 end
