@@ -1,4 +1,5 @@
 require 'text_mapper/pattern'
+require 'text_mapper/target'
 
 module TextMapper
   class Mapping
