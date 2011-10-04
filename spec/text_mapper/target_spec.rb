@@ -28,8 +28,15 @@ module TextMapper
       target.should_receive(:foo)
       ctx = double("execution context")
       ctx.stub(:target).and_return(target)
-      to = Target.new(:foo, :target)
+      to = Target.new(:foo, [], :target)
       to.call(ctx)
+    end
+
+    it "converts arguments to the specified types" do
+      ctx = double("execution context")
+      ctx.should_receive(:foo).with(1)
+      to = Target.new(:foo, [Integer])
+      to.call(ctx, ["1"])
     end
   end
 end

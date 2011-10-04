@@ -34,7 +34,7 @@ module TextMapper
 
       it "converts captured arguments into the specified type" do
         receiver.should_receive(:add).with(1, 2.0)
-        mapping = Mapping.new(pattern(/(\d+) and (\d+)/), target(:add), [Integer, Float])
+        mapping = Mapping.new(pattern(/(\d+) and (\d+)/), target(:add, [Integer, Float]))
         mapping.call(receiver, ["1 and 2.0"])
       end
 
