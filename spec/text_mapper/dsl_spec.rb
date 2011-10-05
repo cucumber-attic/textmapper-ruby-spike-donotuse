@@ -58,6 +58,21 @@ module TextMapper
       context.instance_variable_get(:@to).should eq(:to)
     end
 
+    it "captures arguments" do
+      within(namespace) do
+        map(:from, Object).to(:to_obj)
+
+        def to_obj(obj)
+          @to = obj
+        end
+      end
+
+      context.dispatch([:from, "a string"])
+      context.instance_variable_get(:@to).should eq("a string")
+      context.dispatch([:from, { :a => :hash }])
+      context.instance_variable_get(:@to).should eq({ :a => :hash })
+    end
+
     it "maps based on the type of the dispatch argument" do
       within(namespace) do
         map(:from, String).to(:to_string)
