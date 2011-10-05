@@ -25,5 +25,18 @@ module TextMapper
         end
       end
     end
+
+    it "maps from a simple pattern to a method" do
+      within(namespace) do
+        map(:from).to(:to)
+
+        def to
+          @to = :to
+        end
+      end
+
+      context.dispatch([:from])
+      context.instance_variable_get(:@to).should eq(:to)
+    end
   end
 end
