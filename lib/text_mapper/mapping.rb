@@ -28,5 +28,9 @@ module TextMapper
       args = captures_from(action)
       to.call(receiver, args)
     end
+
+    def reify!
+      self
+    end
   end
 end

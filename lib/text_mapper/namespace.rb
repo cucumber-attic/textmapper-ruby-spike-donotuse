@@ -21,7 +21,8 @@ module TextMapper
     end
 
     def find_mapping(from)
-      mappings.find!(from)
+      mapping = mappings.find!(from)
+      mapping.reify!
     end
 
     def listeners

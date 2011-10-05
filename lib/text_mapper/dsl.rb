@@ -1,6 +1,26 @@
 require 'text_mapper/mapping'
 
 module TextMapper
+  class MappingBuilder
+    attr_reader :pattern, :target
+
+    def initialize(args)
+      @pattern = Pattern.new(args)
+    end
+
+    def to(*args)
+      @target = Target.new(*args)
+    end
+
+    def match(raw_pattern)
+      pattern === raw_pattern
+    end
+
+    def reify!
+      @mapping ||= Mapping.new(pattern, target)
+    end
+  end
+
   class Dsl
     def initialize(mappings, const_aliases={})
       @mappings = mappings
@@ -22,6 +42,12 @@ module TextMapper
 
           define_method(:def_map) do |dsl_args|
             mappings.add_mapping(Mapping.from_fluent(dsl_args))
+          end
+
+          define_method(:map) do |*from|
+            mapping = MappingBuilder.new(from)
+            mappings.add_mapping(mapping)
+            mapping
           end
         end
       end.call(@mappings, @const_aliases)

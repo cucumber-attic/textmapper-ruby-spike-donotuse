@@ -47,6 +47,13 @@ module TextMapper
       it "raises an error when the action does not contain enough information to satisfy the 'from'"
     end
 
+    describe "#reify!" do
+      it "returns self" do
+        mapping = Mapping.new(pattern(:from), target(:to))
+        mapping.reify!.should eq(mapping)
+      end
+    end
+
     describe "#source_location" do
       it "says where the mapping was defined"
     end

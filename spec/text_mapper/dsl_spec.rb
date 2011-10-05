@@ -4,6 +4,12 @@ module TextMapper
   describe Dsl do
     let(:namespace) { Namespace.new }
 
+    let(:context) do
+      context = Context.new
+      namespace.build_context(context)
+      context
+    end
+
     def within(namespace, &script)
       Module.new do
         extend Dsl.new(namespace).to_module
