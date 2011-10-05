@@ -49,6 +49,10 @@ module TextMapper
             mappings.add_mapping(mapping)
             mapping
           end
+
+          define_method(:on) do |*event, &callback|
+            mappings.add_mapping(Listener.new(event, &callback))
+          end
         end
       end.call(@mappings, @const_aliases)
     end

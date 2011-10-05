@@ -11,7 +11,12 @@ module TextMapper
     end
 
     def call(context, test_case)
-      @blk.call(test_case)
+      #@blk.call(test_case)
+      context.instance_exec(test_case, &@blk)
+    end
+
+    def reify!
+      self
     end
   end
 end

@@ -32,65 +32,82 @@ module TextMapper
       end
     end
 
-    it "maps from a simple pattern to a method" do
-      within(namespace) do
-        map(:from).to(:to)
+    describe ".map" do
+      it "maps from a simple pattern to a method" do
+        within(namespace) do
+          map(:from).to(:to)
 
-        def to
-          @to = :to
+          def to
+            @to = :to
+          end
         end
+
+        context.dispatch([:from])
+        context.instance_variable_get(:@to).should eq(:to)
       end
 
-      context.dispatch([:from])
-      context.instance_variable_get(:@to).should eq(:to)
+      it "maps from a multi-part pattern to a method" do
+        within(namespace) do
+          map(:from, :here).to(:to)
+
+          def to
+            @to = :to
+          end
+        end
+
+        context.dispatch([:from, :here])
+        context.instance_variable_get(:@to).should eq(:to)
+      end
+
+      it "captures arguments" do
+        within(namespace) do
+          map(:from, Object).to(:to_obj)
+
+          def to_obj(obj)
+            @to = obj
+          end
+        end
+
+        context.dispatch([:from, "a string"])
+        context.instance_variable_get(:@to).should eq("a string")
+        context.dispatch([:from, { :a => :hash }])
+        context.instance_variable_get(:@to).should eq({ :a => :hash })
+      end
+
+      it "maps based on the type of the dispatch argument" do
+        within(namespace) do
+          map(:from, String).to(:to_string)
+          map(:from, Array).to(:to_array)
+
+          def to_string(str)
+            @to = str
+          end
+
+          def to_array(ary)
+            @to = ary
+          end
+        end
+
+        context.dispatch([:from, "a string"])
+        context.instance_variable_get(:@to).should eq("a string")
+        context.dispatch([:from, [:an, :array]])
+        context.instance_variable_get(:@to).should eq([:an, :array])
+      end
     end
 
-    it "maps from a multi-part pattern to a method" do
-      within(namespace) do
-        map(:from, :here).to(:to)
-
-        def to
-          @to = :to
+    describe ".on" do
+      it "registers an event listener" do
+        within(namespace) do
+          on(:setup) do
+            @foo = :foo
+          end
         end
+
+        context.dispatch([:setup])
+        context.instance_variable_get(:@foo).should eq(:foo)
       end
 
-      context.dispatch([:from, :here])
-      context.instance_variable_get(:@to).should eq(:to)
-    end
-
-    it "captures arguments" do
-      within(namespace) do
-        map(:from, Object).to(:to_obj)
-
-        def to_obj(obj)
-          @to = obj
-        end
-      end
-
-      context.dispatch([:from, "a string"])
-      context.instance_variable_get(:@to).should eq("a string")
-      context.dispatch([:from, { :a => :hash }])
-      context.instance_variable_get(:@to).should eq({ :a => :hash })
-    end
-
-    it "maps based on the type of the dispatch argument" do
-      within(namespace) do
-        map(:from, String).to(:to_string)
-        map(:from, Array).to(:to_array)
-
-        def to_string(str)
-          @to = str
-        end
-
-        def to_array(ary)
-          @to = ary
-        end
-      end
-
-      context.dispatch([:from, "a string"])
-      context.instance_variable_get(:@to).should eq("a string")
-      context.dispatch([:from, [:an, :array]])
-      context.instance_variable_get(:@to).should eq([:an, :array])
+      it "executes in the context of the context"
     end
   end
 end
