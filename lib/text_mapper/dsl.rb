@@ -8,8 +8,8 @@ module TextMapper
       @pattern = Pattern.new(args)
     end
 
-    def to(*args)
-      @target = Target.new(*args)
+    def to(meth_name, *types)
+      @target = Target.new(meth_name, types)
     end
 
     def match(raw_pattern)

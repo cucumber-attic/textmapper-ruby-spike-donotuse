@@ -84,6 +84,21 @@ module TextMapper
         context.dispatch([:map, :from, [:an, :array]])
         context.instance_variable_get(:@to).should eq([:an, :array])
       end
+
+      it "converts target arguments to the specified types" do
+        within(namespace) do
+          map(:from, String).to(:to, Integer)
+
+          def to(int)
+            @to = int
+          end
+        end
+
+        context.dispatch([:map, :from, "1"])
+        context.instance_variable_get(:@to).should eq(1)
+      end
+
+      it "maps to the next method if no target is defined"
     end
 
     describe ".on" do
