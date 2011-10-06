@@ -1,22 +1,19 @@
+require 'text_mapper/callback'
+require 'text_mapper/pattern'
+
 module TextMapper
-  # TODO: Collapse this into the mapping class or make it a subclass like MappingToBlock
   class Listener
+    include Callback
+
+    attr_reader :from
+
     def initialize(signature, &blk)
-      @signature = Pattern.new(signature)
+      @from = Pattern.new(signature)
       @blk = blk
     end
 
-    def match(pattern)
-      @signature === pattern
-    end
-
     def call(context, test_case)
-      #@blk.call(test_case)
       context.instance_exec(test_case, &@blk)
-    end
-
-    def reify!
-      self
     end
   end
 end
