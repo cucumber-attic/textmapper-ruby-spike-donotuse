@@ -40,12 +40,8 @@ module TextMapper
             mappings.add_mapper(mapper)
           end
 
-          define_method(:def_map) do |dsl_args|
-            mappings.add_mapping(Mapping.from_fluent(dsl_args))
-          end
-
           define_method(:map) do |*from|
-            mapping = MappingBuilder.new(from)
+            mapping = MappingBuilder.new(from.unshift(:map))
             mappings.add_mapping(mapping)
             mapping
           end

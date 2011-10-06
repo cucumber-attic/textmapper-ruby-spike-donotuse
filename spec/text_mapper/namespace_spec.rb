@@ -26,7 +26,7 @@ module TextMapper
 
         Module.new do
           extend namespace
-          def_map from => to
+          map(from).to(to)
           define_method(to) { to }
         end
       end

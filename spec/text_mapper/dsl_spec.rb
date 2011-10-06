@@ -23,15 +23,6 @@ module TextMapper
       constants.should eq([:NewString, :NewArray])
     end
 
-    describe ".def_map" do
-      it "creates a mapping in the namespace" do
-        namespace.should_receive(:add_mapping).with(an_instance_of(Mapping))
-        within(namespace) do
-          def_map :from => :to
-        end
-      end
-    end
-
     describe ".map" do
       it "maps from a simple pattern to a method" do
         within(namespace) do
@@ -42,7 +33,7 @@ module TextMapper
           end
         end
 
-        context.dispatch([:from])
+        context.dispatch([:map, :from])
         context.instance_variable_get(:@to).should eq(:to)
       end
 
@@ -55,7 +46,7 @@ module TextMapper
           end
         end
 
-        context.dispatch([:from, :here])
+        context.dispatch([:map, :from, :here])
         context.instance_variable_get(:@to).should eq(:to)
       end
 
@@ -68,9 +59,9 @@ module TextMapper
           end
         end
 
-        context.dispatch([:from, "a string"])
+        context.dispatch([:map, :from, "a string"])
         context.instance_variable_get(:@to).should eq("a string")
-        context.dispatch([:from, { :a => :hash }])
+        context.dispatch([:map, :from, { :a => :hash }])
         context.instance_variable_get(:@to).should eq({ :a => :hash })
       end
 
@@ -88,9 +79,9 @@ module TextMapper
           end
         end
 
-        context.dispatch([:from, "a string"])
+        context.dispatch([:map, :from, "a string"])
         context.instance_variable_get(:@to).should eq("a string")
-        context.dispatch([:from, [:an, :array]])
+        context.dispatch([:map, :from, [:an, :array]])
         context.instance_variable_get(:@to).should eq([:an, :array])
       end
     end
