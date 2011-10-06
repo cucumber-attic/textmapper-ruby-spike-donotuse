@@ -96,7 +96,7 @@ module TextMapper
     end
 
     describe ".on" do
-      it "registers an event listener" do
+      it "registers an event listener that executes within the context" do
         within(namespace) do
           on(:setup) do
             @foo = :foo
@@ -106,8 +106,6 @@ module TextMapper
         context.dispatch([:setup])
         context.instance_variable_get(:@foo).should eq(:foo)
       end
-
-      it "executes in the context of the context"
     end
   end
 end
