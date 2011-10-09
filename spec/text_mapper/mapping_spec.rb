@@ -17,6 +17,16 @@ module TextMapper
       end
     end
 
+    describe ".from_primitives" do
+      it "builds a mapping from primitive data types" do
+        receiver = double("dispatch receiver")
+        receiver.should_receive(:to)
+        mapping = Mapping.from_primitives([:from], [:to])
+        mapping.should match([:from])
+        mapping.call(receiver)
+      end
+    end
+
     describe "#call" do
       let(:receiver) { double("dispatch receiver") }
 

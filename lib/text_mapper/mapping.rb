@@ -13,6 +13,11 @@ module TextMapper
       new(Pattern.new(pattern), Target.new(meth_name, types))
     end
 
+    def self.from_primitives(from, to)
+      meth_name, *types = to
+      new(Pattern.new(from), Target.new(meth_name, types))
+    end
+
     attr_reader :from, :to
 
     def initialize(from, to, types=[])
