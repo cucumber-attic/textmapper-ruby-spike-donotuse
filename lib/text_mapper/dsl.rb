@@ -37,7 +37,7 @@ module TextMapper
               mapper.const_set(const_alias, const)
             end
 
-            mappings.add_mapper(mapper)
+            mappings.add_mixin(mapper)
           end
 
           define_method(:map) do |*from|

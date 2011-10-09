@@ -35,7 +35,7 @@ module TextMapper
         # Move dispatch assertion to Context spec, use a mock to ensure the Context Factory's new method
         # is called with the correct arguments
         build_mapper(:mapper_a, subject.to_extension_module)
-        context = subject.build_context(Context.new)
+        context = subject.initialize_context(Context.new)
         context.dispatch([:map, :from_mapper_a]).should eq(:to_mapper_a)
       end
     end

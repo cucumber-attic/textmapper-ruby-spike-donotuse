@@ -6,7 +6,7 @@ module TextMapper
 
     let(:context) do
       context = Context.new
-      namespace.build_context(context)
+      namespace.initialize_context(context)
       context
     end
 
