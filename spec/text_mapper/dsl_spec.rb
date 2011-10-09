@@ -98,7 +98,7 @@ module TextMapper
         context.instance_variable_get(:@to).should eq(1)
       end
 
-      it "maps to the next method if no target is defined"
+      it "annotates the next defined method if no target is given"
     end
 
     describe ".on" do
