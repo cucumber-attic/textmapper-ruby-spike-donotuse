@@ -12,6 +12,7 @@ module TextMapper
       @constant_aliases = constant_aliases
     end
 
+    # RENAME: add_mixin
     def add_mapper(mapper)
       mappers << mapper
     end
@@ -29,6 +30,7 @@ module TextMapper
       mappings.select { |mapping| Listener === mapping }
     end
 
+    # RENAME: initialize_context
     def build_context(context)
       context.mappings = self
       context.mappers = mappers
