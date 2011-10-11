@@ -2,9 +2,20 @@ require 'text_mapper/mapping'
 
 module TextMapper
   class MappingBuilder
+    class << self
+      attr_accessor :last_mapping
+
+      def ensure_target(meth_name)
+        unless last_mapping.target
+          last_mapping.to(meth_name)
+        end
+      end
+    end
+
     attr_reader :pattern, :target
 
     def initialize(args)
+      self.class.last_mapping = self
       @pattern = Pattern.new(args)
     end
 
@@ -38,6 +49,10 @@ module TextMapper
             end
 
             mappings.add_mixin(mapper)
+          end
+
+          def method_added(meth_name)
+            MappingBuilder.ensure_target(meth_name)
           end
 
           define_method(:map) do |*from|
