@@ -7,6 +7,7 @@ module TextMapper
     include Callback
 
     def self.from_fluent(dsl_args)
+      warn "This method will be removed without warning"
       from, to = dsl_args.shift
       pattern = [:map, from].flatten
       meth_name, *types = to
