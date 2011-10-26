@@ -36,10 +36,15 @@ module TextMapper
     def initialize(mappings, const_aliases={})
       @mappings = mappings
       @const_aliases = const_aliases
+      @user_methods = {}
     end
 
+    def define_method(name, &body)
+      @user_methods[name] = body
+    end
+    
     def to_module
-      lambda do |mappings, const_aliases|
+      lambda do |mappings, const_aliases, user_methods|
         Module.new do
           metaclass = (class << self; self; end)
 
@@ -64,8 +69,12 @@ module TextMapper
           define_method(:on) do |*event, &callback|
             mappings.add_mapping(Listener.new(event, &callback))
           end
+
+          user_methods.each do |name, body|
+            define_method(name, &body)
+          end
         end
-      end.call(@mappings, @const_aliases)
+      end.call(@mappings, @const_aliases, @user_methods)
     end
   end
 end

@@ -10,9 +10,15 @@ module TextMapper
       context
     end
 
-    def within(namespace, &script)
+    def within(namespace_or_dsl, &script)
+      if Dsl === namespace_or_dsl
+        ext_mod = namespace_or_dsl.to_module
+      else
+        ext_mod = Dsl.new(namespace_or_dsl).to_module
+      end
+      
       Module.new do
-        extend Dsl.new(namespace).to_module
+        extend ext_mod
         module_eval(&script)
       end
     end
@@ -21,6 +27,20 @@ module TextMapper
       dsl = Dsl.new(namespace, { String => :NewString, Array => :NewArray })
       constants = Module.new { extend dsl.to_module }.constants
       constants.should eq([:NewString, :NewArray])
+    end
+
+    it "adds new methods to the dsl" do
+      foo = nil
+      dsl = Dsl.new(namespace)
+      dsl.define_method(:foo) do |arg|
+        foo = arg
+      end
+      
+      within(dsl) do
+        foo(:bar)
+      end
+
+      foo.should eq(:bar)
     end
 
     describe ".map" do
