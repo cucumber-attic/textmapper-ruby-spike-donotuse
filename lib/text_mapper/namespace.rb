@@ -35,9 +35,16 @@ module TextMapper
       context
     end
 
+    def define_method(name, &body)
+      dsl.define_method(name, &body)
+    end
+
+    def dsl
+      @dsl ||= Dsl.new(self, constant_aliases)
+    end
+
     def to_extension_module
-      Dsl.new(self, constant_aliases).to_module
+      dsl.to_module
     end
   end
 end
-
