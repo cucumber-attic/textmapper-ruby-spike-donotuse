@@ -1,10 +1,10 @@
-require 'text_mapper/callback'
+require 'text_mapper/listener'
 require 'text_mapper/pattern'
 require 'text_mapper/target'
 
 module TextMapper
   class Mapping
-    include Callback
+    include Listener
 
     def self.from_primitives(from, to)
       meth_name, *types = to

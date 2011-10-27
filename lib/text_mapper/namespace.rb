@@ -1,4 +1,4 @@
-require 'text_mapper/listener'
+require 'text_mapper/block_mapping'
 require 'text_mapper/mapping_pool'
 require 'text_mapper/dsl'
 
@@ -26,7 +26,7 @@ module TextMapper
     end
 
     def listeners
-      mappings.select { |mapping| Listener === mapping }
+      mappings.select { |mapping| BlockMapping === mapping }
     end
 
     def initialize_context(context)

@@ -4,7 +4,7 @@ module TextMapper
   describe Namespace do
     describe "#listeners" do
       it "filters listeners from mappings and returns them" do
-        listener = Listener.new([:from]){}
+        listener = BlockMapping.new([:from]){}
         subject.add_mapping(Mapping.new([:from], :to))
         subject.add_mapping(listener)
         subject.listeners.should eq([listener])

@@ -86,7 +86,7 @@ module TextMapper
 
     def define_on_method(namespace)
       define_method(:on) do |*event, &callback|
-        namespace.add_mapping(Listener.new(event, &callback))
+        namespace.add_mapping(BlockMapping.new(event, &callback))
       end
     end
   end
