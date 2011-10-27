@@ -18,14 +18,14 @@ module TextMapper
       @mappings = mappings
     end
 
-    def find(pattern)
+    def find(pattern, metadata={})
       mappings.find do |mapping|
-        mapping.match(pattern)
+        mapping.match(pattern, metadata)
       end
     end
 
-    def find!(pattern)
-      find(pattern) or (raise UndefinedMappingError, pattern)
+    def find!(pattern, metadata={})
+      find(pattern, metadata) or (raise UndefinedMappingError, pattern)
     end
 
     def add(mapping)

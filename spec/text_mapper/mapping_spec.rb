@@ -10,13 +10,6 @@ module TextMapper
       Target.new(*args)
     end
 
-    describe ".from_fluent" do
-      it "appends :map to the from pattern" do
-        mapping = Mapping.from_fluent([[:from], :to])
-        mapping.should match([:map, :from])
-      end
-    end
-
     describe ".from_primitives" do
       it "builds a mapping from primitive data types" do
         receiver = double("dispatch receiver")

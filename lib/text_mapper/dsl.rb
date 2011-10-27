@@ -23,7 +23,7 @@ module TextMapper
       @target = Target.new(meth_name, types)
     end
 
-    def match(raw_pattern)
+    def match(raw_pattern, metadata={})
       pattern === raw_pattern
     end
 

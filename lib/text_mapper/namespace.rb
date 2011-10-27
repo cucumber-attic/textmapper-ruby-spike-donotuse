@@ -20,8 +20,8 @@ module TextMapper
       mappings.add(mapping)
     end
 
-    def find_mapping(from)
-      mapping = mappings.find!(from)
+    def find_mapping(from, metadata={})
+      mapping = mappings.find!(from, metadata)
       mapping.reify!
     end
 

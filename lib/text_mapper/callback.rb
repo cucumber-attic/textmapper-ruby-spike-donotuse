@@ -1,6 +1,6 @@
 module TextMapper
   module Callback
-    def match(raw_pattern)
+    def match(raw_pattern, metadata={})
       from === raw_pattern
     end
 
