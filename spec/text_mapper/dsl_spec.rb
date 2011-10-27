@@ -16,7 +16,7 @@ module TextMapper
       else
         ext_mod = Dsl.new(namespace_or_dsl).to_module
       end
-      
+
       Module.new do
         extend ext_mod
         module_eval(&script)
@@ -35,7 +35,7 @@ module TextMapper
       dsl.define_method(:foo) do |arg|
         foo = arg
       end
-      
+
       within(dsl) do
         foo(:bar)
       end
