@@ -33,18 +33,20 @@ module TextMapper
   end
 
   class Dsl
-    def initialize(mappings, const_aliases={})
-      @mappings = mappings
+    def initialize(namespace, const_aliases={})
+      @namespace     = namespace
       @const_aliases = const_aliases
-      @user_methods = {}
+      @dsl_methods   = {}
+
+      define_default_dsl_methods(@namespace)
     end
 
     def define_method(name, &body)
-      @user_methods[name] = body
+      @dsl_methods[name] = body
     end
-    
+
     def to_module
-      lambda do |mappings, const_aliases, user_methods|
+      lambda do |namespace, const_aliases, dsl_methods|
         Module.new do
           metaclass = (class << self; self; end)
 
@@ -53,28 +55,39 @@ module TextMapper
               mapper.const_set(const_alias, const)
             end
 
-            mappings.add_mixin(mapper)
+            namespace.add_mixin(mapper)
           end
 
           def method_added(meth_name)
             MappingBuilder.ensure_target(meth_name)
           end
 
-          define_method(:map) do |*from|
-            mapping = MappingBuilder.new(from.unshift(:map))
-            mappings.add_mapping(mapping)
-            mapping
-          end
-
-          define_method(:on) do |*event, &callback|
-            mappings.add_mapping(Listener.new(event, &callback))
-          end
-
-          user_methods.each do |name, body|
+          dsl_methods.each do |name, body|
             define_method(name, &body)
           end
         end
-      end.call(@mappings, @const_aliases, @user_methods)
+      end.call(@namespace, @const_aliases, @dsl_methods)
+    end
+
+    private
+
+    def define_default_dsl_methods(namespace)
+      define_map_method(namespace)
+      define_on_method(namespace)
+    end
+
+    def define_map_method(namespace)
+      define_method(:map) do |*from|
+        mapping = MappingBuilder.new(from.unshift(:map))
+        namespace.add_mapping(mapping)
+        mapping
+      end
+    end
+
+    def define_on_method(namespace)
+      define_method(:on) do |*event, &callback|
+        namespace.add_mapping(Listener.new(event, &callback))
+      end
     end
   end
 end
