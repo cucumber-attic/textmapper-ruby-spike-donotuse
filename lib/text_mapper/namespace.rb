@@ -35,7 +35,7 @@ module TextMapper
       context
     end
 
-    def define_method(name, &body)
+    def define_dsl_method(name, &body)
       dsl.define_method(name, &body)
     end
 
