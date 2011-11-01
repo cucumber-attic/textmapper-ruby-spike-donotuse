@@ -73,6 +73,20 @@ module TextMapper
         it { should_not match([constant, :sym, [1,2,3]]) }
       end
 
+      context 'short-circuiting by matching against nil' do
+        # This is really an artifact of the implementation, but it's not worth
+        # changing at the moment.
+        subject { Pattern.new([nil]) }
+
+        it { should_not match([nil]) }
+        it { should_not match(["foo"]) }
+
+        it "short-circuits the match" do
+          p = Pattern.new([:abc, nil])
+          p.should match([:abc, "foo"])
+        end
+      end
+
       context "extracting captures from the target" do
         it "extracts class captures" do
           pattern = Pattern.new([String, "A", 3])

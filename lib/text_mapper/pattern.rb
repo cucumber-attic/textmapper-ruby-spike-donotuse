@@ -25,6 +25,11 @@ module TextMapper
 
     def compare(parts, targets, last_result=nil, captures=[])
       return [last_result, captures] if parts.length != targets.length
+      # the presence of nil in parts or targets short-circuits the evaluation because
+      # the value of an assignment in an expression context is the result of the assignment,
+      # which when nil evaluates to false and [last_result, captures] is returned. There's
+      # a spec showing we're aware of this behavior. Not sure what to do about it yet. It's
+      # not high-priority.
       return [last_result, captures] unless part = parts[0] and target = targets[0]
 
       if current_result = (part === target)
@@ -44,7 +49,7 @@ module TextMapper
 
     def ensure_array_like(obj)
       unless array_like?(obj)
-        raise TypeError.new("can't convert #{obj.class} into Array")
+        raise TypeError, "can't convert #{obj.class} into Array"
       end
     end
   end
