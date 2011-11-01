@@ -2,10 +2,14 @@ require 'spec_helper'
 
 module TextMapper
   describe Namespace do
+    def mapping(from, to)
+      Mapping.from_primitives([from], [to])
+    end
+
     describe "#listeners" do
       it "filters listeners from mappings and returns them" do
         listener = BlockMapping.new([:from]){}
-        subject.add_mapping(Mapping.new([:from], :to))
+        subject.add_mapping(mapping(:from, :to))
         subject.add_mapping(listener)
         subject.listeners.should eq([listener])
       end
@@ -13,13 +17,11 @@ module TextMapper
 
     describe "#to_extension_module" do
       it "returns a module" do
-        Namespace.new.to_extension_module.should be_an_instance_of(Module)
+        subject.to_extension_module.should be_an_instance_of(Module)
       end
     end
 
     describe "#build_context" do
-      subject { Namespace.new }
-
       def build_mapper(name, namespace)
         from = :"from_#{name}"
         to   = :"to_#{name}"
@@ -40,26 +42,42 @@ module TextMapper
       end
     end
 
-    describe "#find_mapping" do
-      def mapping(from, to)
-        Mapping.from_primitives([from], [to])
-      end
-
+    describe "#find_matching" do
       it "returns the mapping matching the pattern" do
-        namespace = Namespace.new
         foo_mapping = mapping(:foo, :bar)
         baz_mapping = mapping(:baz, :qux)
-        namespace.add_mapping(foo_mapping)
-        namespace.add_mapping(baz_mapping)
-        namespace.find_mapping([:foo]).should eq(foo_mapping)
+        subject.add_mapping(foo_mapping)
+        subject.add_mapping(baz_mapping)
+        subject.find_matching([:foo]).should eq(foo_mapping)
+      end
+
+      it "raises if nothing is found" do
+        expect do
+          subject.find_matching([:whatever])
+        end.to raise_error(UndefinedMappingError)
       end
 
       it "passes the metadata to the mapping collection" do
-        namespace = Namespace.new
-        namespace.mappings.should_receive(:find!)
+        subject.mappings.should_receive(:find_one!)
                           .with([:foo], { :bar => :baz })
                           .and_return(double("dummy").as_null_object)
-        namespace.find_mapping([:foo], { :bar => :baz })
+        subject.find_matching([:foo], { :bar => :baz })
+      end
+    end
+
+    describe "#find_all_matching" do
+      it "returns all the mappings matching the pattern" do
+        foo1_mapping = mapping(:foo, :bar)
+        foo2_mapping = mapping(:foo, :qux)
+        subject.add_mapping(foo1_mapping)
+        subject.add_mapping(foo2_mapping)
+        subject.find_all_matching([:foo]).should eq([foo1_mapping, foo2_mapping])
+      end
+
+      it "raises if nothing is found" do
+        expect do
+          subject.find_all_matching([:whatever])
+        end.to raise_error(UndefinedMappingError)
       end
     end
   end

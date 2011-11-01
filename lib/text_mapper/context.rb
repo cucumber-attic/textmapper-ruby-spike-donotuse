@@ -11,7 +11,7 @@ module TextMapper
     end
 
     def dispatch(pattern)
-      mapping = mappings.find_mapping(pattern)
+      mapping = mappings.find_matching(pattern)
       mapping.call(self, pattern)
     end
   end

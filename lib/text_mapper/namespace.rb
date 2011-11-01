@@ -20,9 +20,15 @@ module TextMapper
       mappings.add(mapping)
     end
 
-    def find_mapping(from, metadata={})
-      mapping = mappings.find!(from, metadata)
+    def find_matching(from, metadata={})
+      mapping = mappings.find_one!(from, metadata)
       mapping.reify!
+    end
+
+    def find_all_matching(from, metadata={})
+      mappings.find_all!(from, metadata).map do |mapping|
+        mapping.reify!
+      end
     end
 
     def listeners

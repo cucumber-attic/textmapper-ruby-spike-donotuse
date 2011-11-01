@@ -7,17 +7,31 @@ module TextMapper
     context "without mappings" do
       subject { MappingPool.new }
 
-      describe "#find" do
+      describe "#find_one" do
         it "returns nil" do
-          subject.find([:foo]).should eq(nil)
+          subject.find_one([:foo]).should eq(nil)
         end
       end
 
-      describe "#find!" do
-        it "raises UndefinedMappingError" do
+      describe "#find_one!" do
+        it "raises UndefinedMappingError because there are no mappings" do
           expect {
-            subject.find!([:foo])
+            subject.find_one!([:foo])
           }.to raise_error(UndefinedMappingError)
+        end
+      end
+
+      describe "#find_all" do
+        it "returns an empty array" do
+          subject.find_all([:foo]).should eq([])
+        end
+      end
+
+      describe "#find_all!" do
+        it "raises UndefinedMappingError because there are no mappings" do
+          expect do
+            subject.find_all!([:foo])
+          end.to raise_error(UndefinedMappingError)
         end
       end
 
@@ -38,19 +52,25 @@ module TextMapper
     context "with mappings" do
       subject { MappingPool.new(mapping) }
 
-      describe "#find" do
+      describe "#find_one" do
         it "returns the matching mapping" do
-          subject.find([:foo]).should eq(mapping)
+          subject.find_one([:foo]).should eq(mapping)
         end
 
         it "returns nil if no mapping matches" do
-          subject.find([:bar]).should eq(nil)
+          subject.find_one([:bar]).should eq(nil)
         end
 
         it "passes the metadata to the mapping" do
           mapping.should_receive(:match)
                  .with([:foo], { :bar => :baz })
-          subject.find([:foo], { :bar => :baz })
+          subject.find_one([:foo], { :bar => :baz })
+        end
+      end
+
+      describe "#find_all" do
+        it "returns all matching mappings" do
+          subject.find_all([:foo]).should eq([mapping])
         end
       end
 

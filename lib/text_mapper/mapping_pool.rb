@@ -18,14 +18,26 @@ module TextMapper
       @mappings = mappings
     end
 
-    def find(pattern, metadata={})
+    def find_one(pattern, metadata={})
       mappings.find do |mapping|
         mapping.match(pattern, metadata)
       end
     end
 
-    def find!(pattern, metadata={})
-      find(pattern, metadata) or (raise UndefinedMappingError, pattern)
+    def find_one!(pattern, metadata={})
+      find_one(pattern, metadata) or (raise UndefinedMappingError, pattern)
+    end
+
+    def find_all(pattern, metadata={})
+      mappings.select do |mapping|
+        mapping.match(pattern, metadata)
+      end
+    end
+
+    def find_all!(pattern, metadata={})
+      all = find_all(pattern, metadata)
+      raise UndefinedMappingError, pattern if all.empty?
+      all
     end
 
     def add(mapping)
