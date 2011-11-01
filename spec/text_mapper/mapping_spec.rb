@@ -10,6 +10,9 @@ module TextMapper
       Target.new(*args)
     end
 
+    subject { Mapping.from_primitives([:from], [:to]) }
+    it_behaves_like "a listener"
+
     describe ".from_primitives" do
       it "builds a mapping from primitive data types" do
         receiver = double("dispatch receiver")
