@@ -1,4 +1,5 @@
-require 'text_mapper/mapping'
+require 'text_mapper/method_mapping'
+require 'text_mapper/block_mapping'
 
 module TextMapper
   class Dsl
@@ -28,7 +29,7 @@ module TextMapper
           end
 
           def method_added(meth_name)
-            Mapping::Builder.ensure_target(meth_name)
+            MethodMapping::Builder.ensure_target(meth_name)
           end
 
           dsl_methods.each do |name, body|
@@ -47,7 +48,7 @@ module TextMapper
 
     def define_map_method(namespace)
       define_method(:map) do |*from|
-        mapping = Mapping::Builder.new(from.unshift(:map))
+        mapping = MethodMapping::Builder.new(from.unshift(:map))
         namespace.add_mapping(mapping)
         mapping
       end

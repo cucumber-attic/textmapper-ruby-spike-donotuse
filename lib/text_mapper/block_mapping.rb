@@ -1,9 +1,9 @@
-require 'text_mapper/listener'
+require 'text_mapper/mapping'
 require 'text_mapper/pattern'
 
 module TextMapper
   class BlockMapping
-    include Listener
+    include Mapping
 
     attr_reader :from
 

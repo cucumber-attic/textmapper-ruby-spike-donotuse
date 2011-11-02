@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module TextMapper
   describe MappingPool do
-    let(:mapping) { Mapping.new([:foo], :bar) }
+    let(:mapping) { MethodMapping.new([:foo], :bar) }
 
     context "without mappings" do
       subject { MappingPool.new }

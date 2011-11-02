@@ -3,7 +3,7 @@ require 'spec_helper'
 module TextMapper
   describe Namespace do
     def mapping(from, to)
-      Mapping.from_primitives([from], [to])
+      MethodMapping.from_primitives([from], [to])
     end
 
     describe "#listeners" do
