@@ -11,7 +11,7 @@ module TextMapper
     end
 
     subject { MethodMapping.from_primitives([:from], [:to]) }
-    it_behaves_like "a listener"
+    it_behaves_like "a mapping"
 
     describe ".from_primitives" do
       it "builds a mapping from primitive data types" do

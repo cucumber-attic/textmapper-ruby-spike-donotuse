@@ -38,7 +38,7 @@ module TextMapper
         # is called with the correct arguments
         build_mapper(:mapper_a, subject.to_extension_module)
         context = subject.initialize_context(Context.new)
-        context.dispatch([:map, :from_mapper_a]).should eq(:to_mapper_a)
+        context.dispatch([:dispatch, :from_mapper_a]).should eq(:to_mapper_a)
       end
     end
 

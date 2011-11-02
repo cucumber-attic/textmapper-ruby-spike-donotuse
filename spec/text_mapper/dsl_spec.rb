@@ -53,7 +53,7 @@ module TextMapper
           end
         end
 
-        context.dispatch([:map, :from])
+        context.dispatch([:dispatch, :from])
         context.instance_variable_get(:@to).should eq(:to)
       end
 
@@ -66,7 +66,7 @@ module TextMapper
           end
         end
 
-        context.dispatch([:map, :from, :here])
+        context.dispatch([:dispatch, :from, :here])
         context.instance_variable_get(:@to).should eq(:to)
       end
 
@@ -79,9 +79,9 @@ module TextMapper
           end
         end
 
-        context.dispatch([:map, :from, "a string"])
+        context.dispatch([:dispatch, :from, "a string"])
         context.instance_variable_get(:@to).should eq("a string")
-        context.dispatch([:map, :from, { :a => :hash }])
+        context.dispatch([:dispatch, :from, { :a => :hash }])
         context.instance_variable_get(:@to).should eq({ :a => :hash })
       end
 
@@ -99,9 +99,9 @@ module TextMapper
           end
         end
 
-        context.dispatch([:map, :from, "a string"])
+        context.dispatch([:dispatch, :from, "a string"])
         context.instance_variable_get(:@to).should eq("a string")
-        context.dispatch([:map, :from, [:an, :array]])
+        context.dispatch([:dispatch, :from, [:an, :array]])
         context.instance_variable_get(:@to).should eq([:an, :array])
       end
 
@@ -114,7 +114,7 @@ module TextMapper
           end
         end
 
-        context.dispatch([:map, :from, "1"])
+        context.dispatch([:dispatch, :from, "1"])
         context.instance_variable_get(:@to).should eq(1)
       end
 
@@ -126,7 +126,7 @@ module TextMapper
           end
         end
 
-        context.dispatch([:map, :from, "hello"])
+        context.dispatch([:dispatch, :from, "hello"])
         context.instance_variable_get(:@to).should eq("hello")
       end
     end

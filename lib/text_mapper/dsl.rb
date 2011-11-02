@@ -48,7 +48,7 @@ module TextMapper
 
     def define_map_method(namespace)
       define_method(:map) do |*from|
-        mapping = MethodMapping::Builder.new(from.unshift(:map))
+        mapping = MethodMapping::Builder.new(from.unshift(:dispatch))
         namespace.add_mapping(mapping)
         mapping
       end
