@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/cucumber/textmapper-ruby"
 
   s.add_development_dependency 'rspec'
+  s.add_development_dependency 'simplecov'
 
   s.rubygems_version   = "1.3.7"
   s.files            = `git ls-files`.split("\n")
