@@ -1,37 +1,6 @@
 require 'text_mapper/mapping'
 
 module TextMapper
-  class MappingBuilder
-    class << self
-      attr_accessor :last_mapping
-
-      def ensure_target(meth_name)
-        unless last_mapping.target
-          last_mapping.to(meth_name)
-        end
-      end
-    end
-
-    attr_reader :pattern, :target
-
-    def initialize(args)
-      self.class.last_mapping = self
-      @pattern = Pattern.new(args)
-    end
-
-    def to(meth_name, *types)
-      @target = Target.new(meth_name, types)
-    end
-
-    def match(raw_pattern, metadata={})
-      pattern === raw_pattern
-    end
-
-    def reify!
-      @mapping ||= Mapping.new(pattern, target)
-    end
-  end
-
   class Dsl
     def initialize(namespace, const_aliases={})
       @namespace     = namespace
@@ -59,7 +28,7 @@ module TextMapper
           end
 
           def method_added(meth_name)
-            MappingBuilder.ensure_target(meth_name)
+            Mapping::Builder.ensure_target(meth_name)
           end
 
           dsl_methods.each do |name, body|
@@ -78,7 +47,7 @@ module TextMapper
 
     def define_map_method(namespace)
       define_method(:map) do |*from|
-        mapping = MappingBuilder.new(from.unshift(:map))
+        mapping = Mapping::Builder.new(from.unshift(:map))
         namespace.add_mapping(mapping)
         mapping
       end
