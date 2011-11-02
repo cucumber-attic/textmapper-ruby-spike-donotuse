@@ -4,7 +4,7 @@ module TextMapper
       from === raw_pattern
     end
 
-    def reify!
+    def build
       self
     end
 

@@ -22,12 +22,12 @@ module TextMapper
 
     def find_matching(from, metadata={})
       mapping = mappings.find_one!(from, metadata)
-      mapping.reify!
+      mapping.build
     end
 
     def find_all_matching(from, metadata={})
       mappings.find_all!(from, metadata).map do |mapping|
-        mapping.reify!
+        mapping.build
       end
     end
 

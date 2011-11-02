@@ -53,10 +53,10 @@ module TextMapper
       it "raises an error when the action does not contain enough information to satisfy the 'from'"
     end
 
-    describe "#reify!" do
+    describe "#build" do
       it "returns self" do
         mapping = Mapping.new(pattern(:from), target(:to))
-        mapping.reify!.should eq(mapping)
+        mapping.build.should eq(mapping)
       end
     end
 

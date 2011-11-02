@@ -4,6 +4,28 @@ require 'text_mapper/target'
 
 module TextMapper
   class Mapping
+    include Listener
+
+    def self.from_primitives(from, to)
+      meth_name, *types = to
+      new(Pattern.new(from), Target.new(meth_name, types))
+    end
+
+    attr_reader :from, :to
+
+    def initialize(from, to, types=[])
+      @from, @to, @types = from, to, types
+    end
+
+    def captures_from(raw_pattern)
+      from.match(raw_pattern) or []
+    end
+
+    def call(receiver, action=[])
+      args = captures_from(action)
+      to.call(receiver, args)
+    end
+
     class Builder
       class << self
         attr_accessor :last_mapping
@@ -30,31 +52,9 @@ module TextMapper
         pattern === raw_pattern
       end
 
-      def reify!
+      def build
         @mapping ||= Mapping.new(pattern, target)
       end
-    end
-
-    include Listener
-
-    def self.from_primitives(from, to)
-      meth_name, *types = to
-      new(Pattern.new(from), Target.new(meth_name, types))
-    end
-
-    attr_reader :from, :to
-
-    def initialize(from, to, types=[])
-      @from, @to, @types = from, to, types
-    end
-
-    def captures_from(raw_pattern)
-      from.match(raw_pattern) or []
-    end
-
-    def call(receiver, action=[])
-      args = captures_from(action)
-      to.call(receiver, args)
     end
   end
 end
