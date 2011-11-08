@@ -22,25 +22,6 @@ module TextMapper
     end
 
     describe "#build_context" do
-      def build_mapper(name, namespace)
-        from = :"from_#{name}"
-        to   = :"to_#{name}"
-
-        Module.new do
-          extend namespace
-          map(from).to(to)
-          define_method(to) { to }
-        end
-      end
-
-      it "builds an execution context" do
-        # Move dispatch assertion to Context spec, use a mock to ensure the Context Factory's new method
-        # is called with the correct arguments
-        build_mapper(:mapper_a, subject.to_extension_module)
-        context = subject.build_context(Context.new)
-        context.dispatch([:dispatch, :from_mapper_a]).should eq(:to_mapper_a)
-      end
-
       let(:context) { double("context", :namespace= => true, :mixins= => true) }
 
       it "sets the namespace" do
