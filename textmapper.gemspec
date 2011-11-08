@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.email       = "msassak@gmail.com"
   s.homepage    = "https://github.com/cucumber/textmapper-ruby"
 
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'simplecov'
 
