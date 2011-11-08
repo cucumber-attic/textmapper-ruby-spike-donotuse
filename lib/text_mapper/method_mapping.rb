@@ -13,8 +13,8 @@ module TextMapper
 
     attr_reader :from, :to
 
-    def initialize(from, to, types=[])
-      @from, @to, @types = from, to, types
+    def initialize(from, to)
+      @from, @to = from, to
     end
 
     def captures_from(raw_pattern)
