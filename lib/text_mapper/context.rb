@@ -1,17 +1,13 @@
 module TextMapper
   class Context
-    attr_reader :mappings
+    attr_accessor :namespace
 
-    def mappings=(mappings)
-      @mappings = mappings
-    end
-
-    def mappers=(mappers)
+    def mixins=(mappers)
       mappers.each { |mapper| extend(mapper) }
     end
 
     def dispatch(pattern)
-      mapping = mappings.find_matching(pattern)
+      mapping = namespace.find_matching(pattern)
       mapping.call(self, pattern)
     end
   end

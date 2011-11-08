@@ -41,8 +41,17 @@ module TextMapper
         context.dispatch([:dispatch, :from_mapper_a]).should eq(:to_mapper_a)
       end
 
-      it "sets the namespace"
-      it "sets the mixins"
+      let(:context) { double("context", :namespace= => true, :mixins= => true) }
+
+      it "sets the namespace" do
+        context.should_receive(:namespace=).with(subject)
+        subject.build_context(context)
+      end
+
+      it "sets the mixins" do
+        context.should_receive(:mixins=).with(subject.mappers)
+        subject.build_context(context)
+      end
     end
 
     describe "#find_matching" do

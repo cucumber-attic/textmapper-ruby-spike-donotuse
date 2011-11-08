@@ -36,8 +36,8 @@ module TextMapper
     end
 
     def build_context(context)
-      context.mappings = self
-      context.mappers = mappers
+      context.namespace = self
+      context.mixins = mappers
       context
     end
 
