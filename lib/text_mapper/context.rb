@@ -2,8 +2,8 @@ module TextMapper
   class Context
     attr_accessor :namespace
 
-    def mixins=(mappers)
-      mappers.each { |mapper| extend(mapper) }
+    def mixins=(mixins)
+      mixins.each { |mixin| extend(mixin) }
     end
 
     def dispatch(pattern)

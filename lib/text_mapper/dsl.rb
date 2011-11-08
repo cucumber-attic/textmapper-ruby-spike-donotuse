@@ -20,12 +20,12 @@ module TextMapper
         Module.new do
           metaclass = (class << self; self; end)
 
-          metaclass.send(:define_method, :extended) do |mapper|
+          metaclass.send(:define_method, :extended) do |mixin|
             const_aliases.each_pair do |const, const_alias|
-              mapper.const_set(const_alias, const)
+              mixin.const_set(const_alias, const)
             end
 
-            namespace.add_mixin(mapper)
+            namespace.add_mixin(mixin)
           end
 
           def method_added(meth_name)

@@ -49,7 +49,7 @@ module TextMapper
       end
 
       it "sets the mixins" do
-        context.should_receive(:mixins=).with(subject.mappers)
+        context.should_receive(:mixins=).with(subject.mixins)
         subject.build_context(context)
       end
     end

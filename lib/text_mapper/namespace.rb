@@ -4,16 +4,16 @@ require 'text_mapper/dsl'
 
 module TextMapper
   class Namespace
-    attr_reader :mappings, :mappers, :constant_aliases
+    attr_reader :mappings, :mixins, :constant_aliases
 
     def initialize(constant_aliases = {})
       @mappings = MappingPool.new
-      @mappers = []
+      @mixins = []
       @constant_aliases = constant_aliases
     end
 
-    def add_mixin(mapper)
-      mappers << mapper
+    def add_mixin(mixin)
+      mixins << mixin
     end
 
     def add_mapping(mapping)
@@ -37,7 +37,7 @@ module TextMapper
 
     def build_context(context)
       context.namespace = self
-      context.mixins = mappers
+      context.mixins = mixins
       context
     end
 
