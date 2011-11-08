@@ -35,7 +35,7 @@ module TextMapper
       mappings.select { |mapping| BlockMapping === mapping }
     end
 
-    def initialize_context(context)
+    def build_context(context)
       context.mappings = self
       context.mappers = mappers
       context
