@@ -6,15 +6,6 @@ module TextMapper
       MethodMapping.from_primitives([from], [to])
     end
 
-    describe "#listeners" do
-      it "filters listeners from mappings and returns them" do
-        listener = BlockMapping.new([:from]){}
-        subject.add_mapping(mapping(:from, :to))
-        subject.add_mapping(listener)
-        subject.listeners.should eq([listener])
-      end
-    end
-
     describe "#to_extension_module" do
       it "returns a module" do
         subject.to_extension_module.should be_an_instance_of(Module)

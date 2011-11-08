@@ -31,10 +31,6 @@ module TextMapper
       end
     end
 
-    def listeners
-      mappings.select { |mapping| BlockMapping === mapping }
-    end
-
     def build_context(context)
       context.namespace = self
       context.mixins = mixins
