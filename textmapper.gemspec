@@ -7,11 +7,11 @@ Gem::Specification.new do |s|
   s.email       = "msassak@gmail.com"
   s.homepage    = "https://github.com/cucumber/textmapper-ruby"
 
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'rake', '>= 0.9.2'
+  s.add_development_dependency 'rspec', '~> 2.9.0'
+  s.add_development_dependency 'simplecov', '>= 0.6.2'
 
-  s.rubygems_version   = "1.3.7"
+  s.rubygems_version   = ">= 1.8.24"
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {spec,features}/*`.split("\n")
   s.extra_rdoc_files = ["LICENSE", "README.md"]
